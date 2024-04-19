@@ -1,6 +1,7 @@
 import re
 from typing import Optional
-from pyl402 import Token, Store, Wallet
+from pyl402.token_store import Token, Store
+from pyl402.wallet import Wallet
 import httpx
 
 

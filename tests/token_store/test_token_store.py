@@ -1,5 +1,5 @@
 import unittest
-from ..token_store import MemoryTokenStore, Token
+from pyl402.token_store import MemoryTokenStore, Token
 
 class TestMemoryTokenStore(unittest.TestCase):
     def setUp(self):

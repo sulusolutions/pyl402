@@ -1,5 +1,5 @@
 import httpx
-from ..wallet import Wallet, PaymentResult
+from .wallet import Wallet, PaymentResult
 
 class AlbyPaymentResponse:
     def __init__(self, amount, description, destination, fee, payment_hash, payment_preimage, payment_request):
