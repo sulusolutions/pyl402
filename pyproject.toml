@@ -1,0 +1,15 @@
+[tool.poetry]
+name = "pyl402"
+version = "0.1.0"
+description = "Python tools for the L402 protocol."
+authors = ["Samuel Alarco <samuel.alarco@sulusolutions.com>"]
+license = "MIT"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
