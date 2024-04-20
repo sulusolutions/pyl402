@@ -5,6 +5,8 @@ description = "Python tools for the L402 protocol."
 authors = ["Samuel Alarco <samuel.alarco@sulusolutions.com>"]
 license = "MIT"
 readme = "README.md"
+source = [{ url = "https://github.com/sulusolutions/pyl402.git", name = "github" }]
+
 
 [tool.poetry.dependencies]
 python = "^3.10"
