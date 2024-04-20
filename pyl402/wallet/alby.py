@@ -12,9 +12,10 @@ class AlbyPaymentResponse:
         self.payment_request = payment_request
 
 class AlbyWallet(Wallet):
-    def __init__(self, token: str):
+    def __init__(self, token: str, client: httpx.Client = None):
         self.base_url = "https://api.getalby.com"
         self.credentials = token
+        self.client = client if client else httpx.Client()
 
     def pay_invoice(self, invoice: str) -> PaymentResult:
         url = f"{self.base_url}/payments/bolt11"
@@ -29,15 +30,14 @@ class AlbyWallet(Wallet):
         }
 
         try:
-            with httpx.Client() as client:
-                response = client.post(url, json=body, headers=headers)
-                response.raise_for_status()  # Check for HTTP request errors
+            response = self.client.post(url, json=body, headers=headers)
+            response.raise_for_status()  # Check for HTTP request errors
 
-                alby_response = response.json()
-                return PaymentResult(preimage=alby_response.get('payment_preimage', ''),
-                                     success=True)
+            alby_response = response.json()
+            return PaymentResult(preimage=alby_response.get('payment_preimage', ''),
+                                    success=True)
         except httpx.HTTPStatusError as e:
-            return PaymentResult(preimage='', success=False, error=f'HTTP error: {e.response.status_code} {e.response.reason_phrase}')
+                return PaymentResult(preimage='', success=False, error=f'HTTP error: {e.response.status_code} {e.response.reason_phrase}')
         except httpx.RequestError as e:
             return PaymentResult(preimage='', success=False, error=f'Request error: {str(e)}')
         except ValueError:
