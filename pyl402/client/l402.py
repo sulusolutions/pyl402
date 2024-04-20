@@ -12,15 +12,12 @@ class L402Client(httpx.Client):
         self.store = store
 
     def send(self, request: httpx.Request, *args, **kwargs) -> httpx.Response:
-        print("Overriding send method")
         # First, try to retrieve and use an L402 token if available
         token = self.store.get(str(request.url))
         if token:
             request.headers['Authorization'] = f"L402 {token.token_string}"
 
-        print("Sending request")
         response = super().send(request, *args, **kwargs)
-        print("Received response with status code", response.status_code)
         # Check for 402 Payment Required status code
         if response.status_code == 402:
             # Handle payment challenge
@@ -35,7 +32,6 @@ class L402Client(httpx.Client):
                     self.store.put(str(request.url), Token(l402_token))
                     # Retry the request with the new token
                     request.headers['Authorization'] = f"{l402_token}"
-                    print("Retrying request with new token", l402_token)
                     return super().send(request, *args, **kwargs)
         
         return response
