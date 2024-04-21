@@ -43,6 +43,40 @@ print(response.text)
 
 This example demonstrates creating an L402 client using an Alby wallet and a memory-based token store to access a resource that may require payment. 
 
+### Example with OpenAI SDK and Sulu Inference Endpoints
+
+With this example you can access inference APIs just with Bitcoin and the Lightning Network!
+
+```python
+import os
+from openai import OpenAI
+
+from pyl402.wallet import AlbyWallet
+from pyl402.client import L402Client
+from pyl402.token_store import MemoryTokenStore
+
+# Create the L402 client
+alby_wallet = AlbyWallet(os.getenv("ALBY_BEARER_TOKEN"))
+token_store = MemoryTokenStore()
+client = L402Client(wallet=alby_wallet, store=token_store)
+
+client = OpenAI(
+    http_client=client,
+    base_url='https://suluai.ln.sulu.sh/v1',
+)
+
+chat_completion = client.chat.completions.create(
+    messages=[
+        {
+            "role": "user",
+            "content": "Say this is a test",
+        }
+    ],
+    model="meta-llama/Llama-3-70b-chat-hf",
+)
+print(chat_completion.choices[0].message.content)
+```
+
 ## Contributions
 Contributions are welcome! If you'd like to contribute, please fork the repository and use a feature branch. Pull requests are warmly welcome.
 
