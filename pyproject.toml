@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "pyl402"
-version = "0.1.0"
+version = "0.1.2"
 description = "Python tools for the L402 protocol."
 authors = ["Samuel Alarco <samuel.alarco@sulusolutions.com>"]
 license = "MIT"
