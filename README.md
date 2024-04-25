@@ -37,7 +37,7 @@ store = MemoryTokenStore()
 client = L402Client(wallet=wallet, store=store)
 
 # Use the client to send HTTP requests
-response = client.get('http://rnd.ln.sulu.sh/randomnumber')
+response = client.get('https://rnd.ln.sulu.sh/randomnumber')
 print(response.text)
 ```
 
